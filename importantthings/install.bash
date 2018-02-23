@@ -3,19 +3,18 @@ update_installed_lists() {
     brew cask ls > installed_via_cask.txt 
     # brew_apps.txt is static (ie you have to update it manually)
 }
-installed_via_brew_path=$()
 
 install_brew_stuff() {
   # install normal brew stuff
-  for package in $(cat installed_via_brew.txt)
+  for package in $(cat ~/dotfiles/importantthings/installed_via_brew.txt)
     do
         brew install $package
   done
 
   # install cask brew stuff 
-  for package in $(cat installed_via_cask.txt)
+  for package in $(cat ~/dotfiles/importantthings/installed_via_cask.txt)
     do
-        brew install $package
+        brew cask install $package
   done
 
   # install misc brew stuff
@@ -36,7 +35,7 @@ install_eventbrite_repos() {
 
   #git clone all of the eventbrite repos that you currently have downloaded
 
-  for repo in $(ls eventbrite_repo_names.txt)
+  for repo in $(cat ~/dotfiles/importantthings/eventbrite_repo_names.txt)
     do 
       git clone "$EB_GITHUB_URL$repo.git"
 
@@ -49,3 +48,11 @@ install_eventbrite_repos() {
 install_presto_stuff() {
   echo “follow instructions at https://docs.evbhome.com/data-foundry/tools_presto.html#access-via-presto-cli”
 }
+
+main() {
+    install_brew_stuff
+    install_eventbrite_repos
+    install_presto_stuff
+}
+
+main
